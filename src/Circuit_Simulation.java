@@ -13,7 +13,8 @@ public class Circuit_Simulation {
         ArrayList<node> nodes = new ArrayList<node>();
         ArrayList<element> elements = new ArrayList<element>();
     }
+
     public static void main(String[] args){
-        System.out.println("Hello behrad!!!");
+        System.out.println("Hello");
     }
 }
