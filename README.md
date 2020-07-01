@@ -1,3 +1,8 @@
 # Spice
 OOP final project
-salam
+setup plan :
+classes : 
+resistor
+capacitor inductor
+sources
+
