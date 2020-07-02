@@ -6,23 +6,23 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Circuit_Simulation {
-    class node{
+    static class node{
         ArrayList<element> connections = new ArrayList<element>();
         float voltage;
         boolean is_ground = false;
+        String name;
     }
-    class element{
+    static class element{
         String name;
         int n1,n2,b,voltage;
     }
-    class branch{
+    static class branch{
         ArrayList<node> connections = new ArrayList<node>();
         String name;
 
     }
     /*********************elements*********************/
-    {
-        class resistor extends element{
+        static class resistor extends element{
             int r;
             void vu(int Current){
 
@@ -32,7 +32,7 @@ public class Circuit_Simulation {
             }
         }
 
-        class capacitor extends element{
+        static class capacitor extends element{
             int c;
             int q1,q2;
             void vu(int Current,int dt){
@@ -43,7 +43,7 @@ public class Circuit_Simulation {
             }
         }
 
-        class inductor extends element{
+        static class inductor extends element{
             int l;
             int f1,f2;
             void vu(int Current, int dt){
@@ -51,30 +51,51 @@ public class Circuit_Simulation {
             }
         }
 
-        class voltage_Source extends element{
+        static class voltage_Source extends element{
 
         }
 
-        class current_Source extends element{
+        static class current_Source extends element{
 
         }
 
-        class diode extends element{
+        static class diode extends element{
             int direction;
             boolean alone_Element_in_Branch;
             String model;
             int[] parameters;
         }
-    }
 
     static class circuit{
+        /********************Variables*********************/
+
         boolean test = false,has_file = false;
         ArrayList<node> nodes = new ArrayList<node>();
         ArrayList<element> elements = new ArrayList<element>();
+        String title = "";
         File file;
+
+        /*********************methods**********************/
+
+        int get_node(String n){
+            for (int i = 0;i<nodes.size();i++){
+                if (nodes.get(i).name.equals(n))
+                    return i;
+            }
+            return -1;
+        }
+
+        int get_element(String n){
+            for (int i = 0;i<elements.size();i++){
+                if (elements.get(i).name.equals(n))
+                    return i;
+            }
+            return -1;
+        }
+
         void get_file_input(){
             if(!test){
-                file = new File("D:\\Projects\\Java\\oop\\Spice");
+                file = new File("src");
                 JFrame f1 = new JFrame("Input file selection");
                 FileSystemView fsv = FileSystemView.getFileSystemView();
                 JFileChooser jfc = new JFileChooser(file,fsv);
@@ -87,6 +108,46 @@ public class Circuit_Simulation {
             else {
                 file = new File("sample_input.txt");
                 has_file = true;
+            }
+        }
+
+        void read_file(){
+            try {
+                Scanner fr = new Scanner(file);
+                title = fr.nextLine();
+                String in = fr.next();
+                switch (in.charAt(0)){
+                    case 'v':{
+                        voltage_Source v = new voltage_Source();
+                        v.name = in.substring(1,in.length());
+                        String node_name = fr.next();
+                        int f = get_node(node_name);
+                        if(f==-1){
+                            node n = new node();
+                            n.name = node_name;
+                            nodes.add(n);
+                        }
+                    }break;
+                    case 'i':{
+                        current_Source i = new current_Source();
+                    }break;
+                    case 'r':{
+                        resistor r = new resistor();
+                    }break;
+                    case 'c':{
+                        capacitor c = new capacitor();
+                    }break;
+                    case 'l':{
+                        inductor l = new inductor();
+                    }break;
+                    case 'd':{
+                        diode d = new diode();
+                    }break;
+
+                }
+            }
+            catch (FileNotFoundException e){
+                System.out.println(e);
             }
         }
 
