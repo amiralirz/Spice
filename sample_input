@@ -1,0 +1,6 @@
+--------- test input ---------
+vVin n1 n2 10mv
+rR1 n2 gnd 20k
+cC1 gnd n3 1nf
+lL1 gnd n4 12mf
+dD1 gnd gnd t1 12m 13k 14u 15Mo
