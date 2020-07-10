@@ -103,6 +103,7 @@ public class Circuit_Simulation {
         boolean has_file = false;
         ArrayList<node> nodes = new ArrayList<node>();
         ArrayList<element> elements = new ArrayList<element>();
+        double dt,ft,t = 0;
         String title = "";
         File file;
 
@@ -545,9 +546,24 @@ public class Circuit_Simulation {
                             elements.add(cs);
                         }
                         break;
+                        case '.':{
+                            in = in.substring(1,in.length());
+                            switch (in){
+                                case "tran":{
+                                    dt = get_number(fr.next());
+                                    ft = get_number(fr.next());
+                                }break;
+                                case "end":{
+                                    System.out.println("");
+                                }break;
+                            }
+                        }
+                        break;
+
                         default:{
                             fr.nextLine();
-                        }break;
+                        }
+                        break;
                     }
                 }
             }
@@ -572,6 +588,5 @@ public class Circuit_Simulation {
         for(int i = 0;i<c1.nodes.size();i++){
             System.out.println(" " + c1.nodes.get(i).name);
         }
-
     }
 }
